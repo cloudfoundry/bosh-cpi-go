@@ -13,6 +13,7 @@ type VMs interface {
 
 type VMCloudProps interface {
 	As(interface{}) error
+	_final() // interface unimplementable from outside
 }
 
 type VMCID struct {
