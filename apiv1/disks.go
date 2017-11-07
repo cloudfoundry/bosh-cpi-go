@@ -9,6 +9,7 @@ type Disks interface {
 	SetDiskMetadata(DiskCID, DiskMeta) error
 
 	HasDisk(DiskCID) (bool, error)
+	ResizeDisk(DiskCID, int) error
 }
 
 type DiskCloudProps interface {

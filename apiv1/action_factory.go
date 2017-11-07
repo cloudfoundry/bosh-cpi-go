@@ -96,6 +96,11 @@ func (f ActionFactory) Create(method string, context CallContext) (interface{}, 
 	case "has_disk":
 		return cpi.HasDisk, nil
 
+	case "resize_disk":
+		return func(diskCID DiskCID, size int) (interface{}, error) {
+			return nil, cpi.ResizeDisk(diskCID, size)
+		}, nil
+
 	case "set_disk_metadata":
 		return func(diskCID DiskCID, metadata DiskMeta) (interface{}, error) {
 			return nil, cpi.SetDiskMetadata(diskCID, metadata)
