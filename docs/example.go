@@ -57,7 +57,7 @@ func (c CPI) DeleteVM(cid apiv1.VMCID) error {
 	return nil
 }
 
-func (c CPI) CalculateVMCloudProperties(res VMResources) (apiv1.VMCloudProps, error) {
+func (c CPI) CalculateVMCloudProperties(res apiv1.VMResources) (apiv1.VMCloudProps, error) {
 	return apiv1.NewVMCloudPropsFromMap(map[string]interface{}{}), nil
 }
 

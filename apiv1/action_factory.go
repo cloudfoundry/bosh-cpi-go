@@ -21,7 +21,6 @@ func (f ActionFactory) Create(method string, context CallContext) (interface{}, 
 	}
 
 	// binds concrete values to interfaces
-
 	switch method {
 	case "info":
 		return cpi.Info, nil
@@ -96,6 +95,19 @@ func (f ActionFactory) Create(method string, context CallContext) (interface{}, 
 
 	case "has_disk":
 		return cpi.HasDisk, nil
+
+	case "set_disk_metadata":
+		return func(diskCID DiskCID, metadata DiskMeta) (interface{}, error) {
+			return nil, cpi.SetDiskMetadata(diskCID, metadata)
+		}, nil
+
+	case "snapshot_disk":
+		return cpi.SnapshotDisk, nil
+
+	case "delete_snapshot":
+		return func(snapshotCID SnapshotCID) (interface{}, error) {
+			return nil, cpi.DeleteSnapshot(snapshotCID)
+		}, nil
 
 	default:
 		return nil, bosherr.Errorf("Unknown method '%s'", method)

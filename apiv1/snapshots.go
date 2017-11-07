@@ -1,5 +1,10 @@
 package apiv1
 
 type Snapshots interface {
-	// todo
+	SnapshotDisk(DiskCID, DiskMeta) (SnapshotCID, error)
+	DeleteSnapshot(SnapshotCID) error
+}
+
+type SnapshotCID struct {
+	cloudID
 }
