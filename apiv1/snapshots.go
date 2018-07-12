@@ -1,5 +1,5 @@
 package apiv1
 
-type Snapshots interface {
+type SnapshotsV1 interface {
 	// todo
 }
