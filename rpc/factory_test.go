@@ -64,6 +64,16 @@ var _ = Describe("Factory", func() {
 		})
 	})
 
+	Describe("max api version", func() {
+		It("returns an error if requested version is higher than maximum supported", func() {
+			resp, _ := act(`{"method":"info", "arguments":[], "api_version": 666}`)
+			Expect(resp).To(Equal(Response{Error: &ResponseError{
+				Type:    "Bosh::Clouds::NotImplemented", // todo shouldnt use NotImplemented
+				Message: "Must call implemented method: CPI API version requested is '666', max supported is '2'",
+			}}))
+		})
+	})
+
 	Describe("info", func() {
 		It("works", func() {
 			cpi.InfoReturns(apiv1.Info{
@@ -73,6 +83,7 @@ var _ = Describe("Factory", func() {
 			resp, _ := act(`{"method":"info", "arguments":[]}`)
 			Expect(resp).To(Equal(Response{
 				Result: map[string]interface{}{
+					"api_version":      float64(2),
 					"stemcell_formats": []interface{}{"stemcell-fmt"},
 				},
 			}))
@@ -493,7 +504,7 @@ var _ = Describe("Factory", func() {
 			Expect(resp).To(Equal(Response{
 				Error: &ResponseError{
 					Type:    "Bosh::Clouds::NotImplemented",
-					Message: "Must call implemented method",
+					Message: "Must call implemented method: Unknown method 'unknown'",
 				},
 			}))
 		})

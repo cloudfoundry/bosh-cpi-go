@@ -33,15 +33,6 @@ type FakeCPI struct {
 	deleteStemcellReturns struct {
 		result1 error
 	}
-	CalculateVMCloudPropertiesStub        func(apiv1.VMResources) (apiv1.VMCloudProps, error)
-	calculateVMCloudPropertiesMutex       sync.RWMutex
-	calculateVMCloudPropertiesArgsForCall []struct {
-		arg1 apiv1.VMResources
-	}
-	calculateVMCloudPropertiesReturns struct {
-		result1 apiv1.VMCloudProps
-		result2 error
-	}
 	CreateVMStub        func(apiv1.AgentID, apiv1.StemcellCID, apiv1.VMCloudProps, apiv1.Networks, []apiv1.DiskCID, apiv1.VMEnv) (apiv1.VMCID, error)
 	createVMMutex       sync.RWMutex
 	createVMArgsForCall []struct {
@@ -56,6 +47,21 @@ type FakeCPI struct {
 		result1 apiv1.VMCID
 		result2 error
 	}
+	CreateVMV2Stub        func(apiv1.AgentID, apiv1.StemcellCID, apiv1.VMCloudProps, apiv1.Networks, []apiv1.DiskCID, apiv1.VMEnv) (apiv1.VMCID, apiv1.Networks, error)
+	createVMV2Mutex       sync.RWMutex
+	createVMV2ArgsForCall []struct {
+		arg1 apiv1.AgentID
+		arg2 apiv1.StemcellCID
+		arg3 apiv1.VMCloudProps
+		arg4 apiv1.Networks
+		arg5 []apiv1.DiskCID
+		arg6 apiv1.VMEnv
+	}
+	createVMV2Returns struct {
+		result1 apiv1.VMCID
+		result2 apiv1.Networks
+		result3 error
+	}
 	DeleteVMStub        func(apiv1.VMCID) error
 	deleteVMMutex       sync.RWMutex
 	deleteVMArgsForCall []struct {
@@ -63,6 +69,15 @@ type FakeCPI struct {
 	}
 	deleteVMReturns struct {
 		result1 error
+	}
+	CalculateVMCloudPropertiesStub        func(apiv1.VMResources) (apiv1.VMCloudProps, error)
+	calculateVMCloudPropertiesMutex       sync.RWMutex
+	calculateVMCloudPropertiesArgsForCall []struct {
+		arg1 apiv1.VMResources
+	}
+	calculateVMCloudPropertiesReturns struct {
+		result1 apiv1.VMCloudProps
+		result2 error
 	}
 	SetVMMetadataStub        func(apiv1.VMCID, apiv1.VMMeta) error
 	setVMMetadataMutex       sync.RWMutex
@@ -126,6 +141,16 @@ type FakeCPI struct {
 	}
 	attachDiskReturns struct {
 		result1 error
+	}
+	AttachDiskV2Stub        func(apiv1.VMCID, apiv1.DiskCID) (apiv1.DiskHint, error)
+	attachDiskV2Mutex       sync.RWMutex
+	attachDiskV2ArgsForCall []struct {
+		arg1 apiv1.VMCID
+		arg2 apiv1.DiskCID
+	}
+	attachDiskV2Returns struct {
+		result1 apiv1.DiskHint
+		result2 error
 	}
 	DetachDiskStub        func(apiv1.VMCID, apiv1.DiskCID) error
 	detachDiskMutex       sync.RWMutex
@@ -281,6 +306,50 @@ func (fake *FakeCPI) CreateVMReturns(result1 apiv1.VMCID, result2 error) {
 		result1 apiv1.VMCID
 		result2 error
 	}{result1, result2}
+}
+
+func (fake *FakeCPI) CreateVMV2(arg1 apiv1.AgentID, arg2 apiv1.StemcellCID, arg3 apiv1.VMCloudProps, arg4 apiv1.Networks, arg5 []apiv1.DiskCID, arg6 apiv1.VMEnv) (apiv1.VMCID, apiv1.Networks, error) {
+	var arg5Copy []apiv1.DiskCID
+	if arg5 != nil {
+		arg5Copy = make([]apiv1.DiskCID, len(arg5))
+		copy(arg5Copy, arg5)
+	}
+	fake.createVMV2Mutex.Lock()
+	fake.createVMV2ArgsForCall = append(fake.createVMV2ArgsForCall, struct {
+		arg1 apiv1.AgentID
+		arg2 apiv1.StemcellCID
+		arg3 apiv1.VMCloudProps
+		arg4 apiv1.Networks
+		arg5 []apiv1.DiskCID
+		arg6 apiv1.VMEnv
+	}{arg1, arg2, arg3, arg4, arg5Copy, arg6})
+	fake.recordInvocation("CreateVMV2", []interface{}{arg1, arg2, arg3, arg4, arg5Copy, arg6})
+	fake.createVMV2Mutex.Unlock()
+	if fake.CreateVMV2Stub != nil {
+		return fake.CreateVMV2Stub(arg1, arg2, arg3, arg4, arg5, arg6)
+	}
+	return fake.createVMV2Returns.result1, fake.createVMV2Returns.result2, fake.createVMV2Returns.result3
+}
+
+func (fake *FakeCPI) CreateVMV2CallCount() int {
+	fake.createVMV2Mutex.RLock()
+	defer fake.createVMV2Mutex.RUnlock()
+	return len(fake.createVMV2ArgsForCall)
+}
+
+func (fake *FakeCPI) CreateVMV2ArgsForCall(i int) (apiv1.AgentID, apiv1.StemcellCID, apiv1.VMCloudProps, apiv1.Networks, []apiv1.DiskCID, apiv1.VMEnv) {
+	fake.createVMV2Mutex.RLock()
+	defer fake.createVMV2Mutex.RUnlock()
+	return fake.createVMV2ArgsForCall[i].arg1, fake.createVMV2ArgsForCall[i].arg2, fake.createVMV2ArgsForCall[i].arg3, fake.createVMV2ArgsForCall[i].arg4, fake.createVMV2ArgsForCall[i].arg5, fake.createVMV2ArgsForCall[i].arg6
+}
+
+func (fake *FakeCPI) CreateVMV2Returns(result1 apiv1.VMCID, result2 apiv1.Networks, result3 error) {
+	fake.CreateVMV2Stub = nil
+	fake.createVMV2Returns = struct {
+		result1 apiv1.VMCID
+		result2 apiv1.Networks
+		result3 error
+	}{result1, result2, result3}
 }
 
 func (fake *FakeCPI) DeleteVM(arg1 apiv1.VMCID) error {
@@ -579,6 +648,40 @@ func (fake *FakeCPI) AttachDiskReturns(result1 error) {
 	}{result1}
 }
 
+func (fake *FakeCPI) AttachDiskV2(arg1 apiv1.VMCID, arg2 apiv1.DiskCID) (apiv1.DiskHint, error) {
+	fake.attachDiskV2Mutex.Lock()
+	fake.attachDiskV2ArgsForCall = append(fake.attachDiskV2ArgsForCall, struct {
+		arg1 apiv1.VMCID
+		arg2 apiv1.DiskCID
+	}{arg1, arg2})
+	fake.recordInvocation("AttachDiskV2", []interface{}{arg1, arg2})
+	fake.attachDiskV2Mutex.Unlock()
+	if fake.AttachDiskV2Stub != nil {
+		return fake.AttachDiskV2Stub(arg1, arg2)
+	}
+	return fake.attachDiskV2Returns.result1, fake.attachDiskV2Returns.result2
+}
+
+func (fake *FakeCPI) AttachDiskV2CallCount() int {
+	fake.attachDiskV2Mutex.RLock()
+	defer fake.attachDiskV2Mutex.RUnlock()
+	return len(fake.attachDiskV2ArgsForCall)
+}
+
+func (fake *FakeCPI) AttachDiskV2ArgsForCall(i int) (apiv1.VMCID, apiv1.DiskCID) {
+	fake.attachDiskV2Mutex.RLock()
+	defer fake.attachDiskV2Mutex.RUnlock()
+	return fake.attachDiskV2ArgsForCall[i].arg1, fake.attachDiskV2ArgsForCall[i].arg2
+}
+
+func (fake *FakeCPI) AttachDiskV2Returns(result1 apiv1.DiskHint, result2 error) {
+	fake.AttachDiskV2Stub = nil
+	fake.attachDiskV2Returns = struct {
+		result1 apiv1.DiskHint
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeCPI) DetachDisk(arg1 apiv1.VMCID, arg2 apiv1.DiskCID) error {
 	fake.detachDiskMutex.Lock()
 	fake.detachDiskArgsForCall = append(fake.detachDiskArgsForCall, struct {
@@ -656,8 +759,12 @@ func (fake *FakeCPI) Invocations() map[string][][]interface{} {
 	defer fake.deleteStemcellMutex.RUnlock()
 	fake.createVMMutex.RLock()
 	defer fake.createVMMutex.RUnlock()
+	fake.createVMV2Mutex.RLock()
+	defer fake.createVMV2Mutex.RUnlock()
 	fake.deleteVMMutex.RLock()
 	defer fake.deleteVMMutex.RUnlock()
+	fake.calculateVMCloudPropertiesMutex.RLock()
+	defer fake.calculateVMCloudPropertiesMutex.RUnlock()
 	fake.setVMMetadataMutex.RLock()
 	defer fake.setVMMetadataMutex.RUnlock()
 	fake.hasVMMutex.RLock()
@@ -672,6 +779,8 @@ func (fake *FakeCPI) Invocations() map[string][][]interface{} {
 	defer fake.deleteDiskMutex.RUnlock()
 	fake.attachDiskMutex.RLock()
 	defer fake.attachDiskMutex.RUnlock()
+	fake.attachDiskV2Mutex.RLock()
+	defer fake.attachDiskV2Mutex.RUnlock()
 	fake.detachDiskMutex.RLock()
 	defer fake.detachDiskMutex.RUnlock()
 	fake.hasDiskMutex.RLock()

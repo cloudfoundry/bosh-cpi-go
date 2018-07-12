@@ -1,6 +1,6 @@
 package apiv1
 
-type Disks interface {
+type DisksV1 interface {
 	CreateDisk(int, DiskCloudProps, *VMCID) (DiskCID, error)
 	DeleteDisk(DiskCID) error
 
@@ -8,6 +8,10 @@ type Disks interface {
 	DetachDisk(VMCID, DiskCID) error
 
 	HasDisk(DiskCID) (bool, error)
+}
+
+type DisksV2Additions interface {
+	AttachDiskV2(VMCID, DiskCID) (DiskHint, error)
 }
 
 type DiskCloudProps interface {
