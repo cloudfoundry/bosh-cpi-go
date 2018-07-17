@@ -6,8 +6,10 @@ type DisksV1 interface {
 
 	AttachDisk(VMCID, DiskCID) error
 	DetachDisk(VMCID, DiskCID) error
+	SetDiskMetadata(DiskCID, DiskMeta) error
 
 	HasDisk(DiskCID) (bool, error)
+	ResizeDisk(DiskCID, int) error
 }
 
 type DisksV2Additions interface {
@@ -23,9 +25,17 @@ type DiskCID struct {
 	cloudID
 }
 
+type DiskMeta struct {
+	cloudKVs
+}
+
 func NewDiskCID(cid string) DiskCID {
 	if cid == "" {
-		panic("Internal incosistency: Disk CID must not be empty")
+		panic("Internal inconsistency: Disk CID must not be empty")
 	}
 	return DiskCID{cloudID{cid}}
+}
+
+func NewDiskMeta(meta map[string]interface{}) DiskMeta {
+	return DiskMeta{cloudKVs{meta}}
 }

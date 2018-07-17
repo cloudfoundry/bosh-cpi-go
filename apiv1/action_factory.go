@@ -126,6 +126,24 @@ func (f ActionFactory) Create(method string, apiVersion int, context CallContext
 	case "has_disk":
 		return cpi.HasDisk, nil
 
+	case "resize_disk":
+		return func(diskCID DiskCID, size int) (interface{}, error) {
+			return nil, cpi.ResizeDisk(diskCID, size)
+		}, nil
+
+	case "set_disk_metadata":
+		return func(diskCID DiskCID, metadata DiskMeta) (interface{}, error) {
+			return nil, cpi.SetDiskMetadata(diskCID, metadata)
+		}, nil
+
+	case "snapshot_disk":
+		return cpi.SnapshotDisk, nil
+
+	case "delete_snapshot":
+		return func(snapshotCID SnapshotCID) (interface{}, error) {
+			return nil, cpi.DeleteSnapshot(snapshotCID)
+		}, nil
+
 	default:
 		return nil, bosherr.Errorf("Unknown method '%s'", method)
 	}
