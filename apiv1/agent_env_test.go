@@ -124,20 +124,38 @@ var _ = Describe("AgentEnv", func() {
 	Describe("AsBytes", func() {
 		It("works", func() {
 			net1 := NewNetwork(NetworkOpts{
-				Type: "fake-type",
-
+				Type:    "fake-type",
 				IP:      "fake-ip",
 				Netmask: "fake-netmask",
 				Gateway: "fake-gateway",
-
 				DNS:     []string{"fake-dns"},
 				Default: []string{"fake-default"},
+				Routes:  []Route{},
 			})
-
 			net1.SetMAC("fake-mac")
 			net1.SetPreconfigured()
 
-			networks := Networks{"fake-net-name": net1}
+			net2 := NewNetwork(NetworkOpts{
+				Type:    "another-fake-type",
+				IP:      "another-fake-ip",
+				Netmask: "another-fake-netmask",
+				Gateway: "another-fake-gateway",
+				DNS:     []string{"another-fake-dns"},
+				Default: []string{},
+				Alias:   "fake-iface-name",
+				Routes: []Route{
+					Route{
+						Destination: "10.0.0.0",
+						Netmask:     "255.255.0.0",
+						Gateway:     "another-fake-gateway",
+					},
+				},
+			})
+
+			networks := Networks{
+				"fake-net-name":         net1,
+				"another-fake-net-name": net2,
+			}
 
 			env := NewVMEnv(map[string]interface{}{"fake-env-key": "fake-env-value"})
 
@@ -180,9 +198,30 @@ var _ = Describe("AgentEnv", func() {
 
             "dns":     ["fake-dns"],
             "default": ["fake-default"],
+            "routes":  [],
 
             "mac": "fake-mac",
             "preconfigured": true
+          },
+          "another-fake-net-name": {
+            "type":    "another-fake-type",
+            "ip":      "another-fake-ip",
+            "netmask": "another-fake-netmask",
+            "gateway": "another-fake-gateway",
+
+            "dns":     ["another-fake-dns"],
+            "default": [],
+            "routes":  [
+              {
+                "Netmask" : "255.255.0.0",
+                "Gateway" : "another-fake-gateway",
+                "Destination" : "10.0.0.0"
+              }
+            ],
+            "alias": "fake-iface-name",
+
+            "mac": "",
+            "preconfigured": false
           }
         },
 
@@ -209,13 +248,14 @@ var _ = Describe("AgentEnv", func() {
 			agentEnv1JSON, err := agentEnv1.AsBytes()
 			Expect(err).ToNot(HaveOccurred())
 
-			var serialized1, serialized2 interface{}
+			var serialized1, serialized2 map[string]interface{}
 
 			err = json.Unmarshal([]byte(agentEnv1JSON), &serialized1)
 			Expect(err).ToNot(HaveOccurred())
 
 			err = json.Unmarshal([]byte(agentEnvJSON), &serialized2)
 			Expect(err).ToNot(HaveOccurred())
+
 
 			Expect(serialized1).To(Equal(serialized2))
 		})
