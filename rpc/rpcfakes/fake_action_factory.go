@@ -4,8 +4,8 @@ package rpcfakes
 import (
 	"sync"
 
-	"github.com/cppforlife/bosh-cpi-go/apiv1"
-	"github.com/cppforlife/bosh-cpi-go/rpc"
+	"github.com/cloudfoundry/bosh-cpi-go/apiv1"
+	"github.com/cloudfoundry/bosh-cpi-go/rpc"
 )
 
 type FakeActionFactory struct {

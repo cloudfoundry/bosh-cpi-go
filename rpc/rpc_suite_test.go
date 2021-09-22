@@ -7,7 +7,7 @@ import (
 	. "github.com/onsi/gomega"
 )
 
-func TestReg(t *testing.T) {
+func TestRpc(t *testing.T) {
 	RegisterFailHandler(Fail)
-	RunSpecs(t, "rpc")
+	RunSpecs(t, "Rpc Suite")
 }

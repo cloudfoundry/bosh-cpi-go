@@ -7,7 +7,7 @@ import (
 	. "github.com/onsi/gomega"
 )
 
-func TestReg(t *testing.T) {
+func TestApiv1(t *testing.T) {
 	RegisterFailHandler(Fail)
-	RunSpecs(t, "apiv1")
+	RunSpecs(t, "Apiv1 Suite")
 }

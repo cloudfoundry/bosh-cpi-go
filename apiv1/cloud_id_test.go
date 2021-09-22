@@ -6,7 +6,7 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 
-	. "github.com/cppforlife/bosh-cpi-go/apiv1"
+	. "github.com/cloudfoundry/bosh-cpi-go/apiv1"
 )
 
 var _ = Describe("CloudID", func() {
