@@ -29,6 +29,7 @@ var _ = Describe("Networks", func() {
 
 	        "dns":     ["fake-dns"],
 	        "default": ["fake-default"],
+	        "routes":  [],
 
 	        "cloud_properties": {"fake-cp-key": "fake-cp-value"}
 	      },
@@ -37,6 +38,7 @@ var _ = Describe("Networks", func() {
 
 	        "dns":     ["fake-dns2"],
 	        "default": ["fake-default2"],
+	        "routes":  [],
 
 	        "cloud_properties": {"fake-cp-key2": "fake-cp-value2"}
 	      }
