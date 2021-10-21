@@ -80,8 +80,8 @@ type NetworkOpts struct {
 
 	DNS     []string
 	Default []string
-	Routes  []Route  `json:"routes"`
-	Alias   string   `json:"alias,omitempty"`
+	Routes  []Route `json:"routes"`
+	Alias   string  `json:"alias,omitempty"`
 
 	CloudProps CloudPropsImpl `json:"cloud_properties"`
 }

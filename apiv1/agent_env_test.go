@@ -256,7 +256,6 @@ var _ = Describe("AgentEnv", func() {
 			err = json.Unmarshal([]byte(agentEnvJSON), &serialized2)
 			Expect(err).ToNot(HaveOccurred())
 
-
 			Expect(serialized1).To(Equal(serialized2))
 		})
 	})

@@ -3,9 +3,9 @@ package main
 import (
 	"os"
 
-	boshlog "github.com/cloudfoundry/bosh-utils/logger"
 	"github.com/cloudfoundry/bosh-cpi-go/apiv1"
 	"github.com/cloudfoundry/bosh-cpi-go/rpc"
+	boshlog "github.com/cloudfoundry/bosh-utils/logger"
 )
 
 type CPIFactory struct{}
