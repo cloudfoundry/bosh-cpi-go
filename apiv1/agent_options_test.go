@@ -17,10 +17,6 @@ var _ = Describe("AgentOptions", func() {
 			opts = AgentOptions{
 				Mbus: "fake-mbus",
 				NTP:  []string{},
-
-				Blobstore: BlobstoreOptions{
-					Type: "fake-blobstore-type",
-				},
 			}
 		})
 
@@ -35,42 +31,6 @@ var _ = Describe("AgentOptions", func() {
 			err := opts.Validate()
 			Expect(err).To(HaveOccurred())
 			Expect(err.Error()).To(ContainSubstring("Must provide non-empty Mbus"))
-		})
-
-		It("returns error if blobstore section is not valid", func() {
-			opts.Blobstore.Type = ""
-
-			err := opts.Validate()
-			Expect(err).To(HaveOccurred())
-			Expect(err.Error()).To(ContainSubstring("Validating Blobstore configuration"))
-		})
-	})
-})
-
-var _ = Describe("BlobstoreOptions", func() {
-	var (
-		opts BlobstoreOptions
-	)
-
-	Describe("Validate", func() {
-		BeforeEach(func() {
-			opts = BlobstoreOptions{
-				Type:    "fake-type",
-				Options: map[string]interface{}{"fake-key": "fake-value"},
-			}
-		})
-
-		It("does not return error if all fields are valid", func() {
-			err := opts.Validate()
-			Expect(err).ToNot(HaveOccurred())
-		})
-
-		It("returns error if Type is empty", func() {
-			opts.Type = ""
-
-			err := opts.Validate()
-			Expect(err).To(HaveOccurred())
-			Expect(err.Error()).To(ContainSubstring("Must provide non-empty Type"))
 		})
 	})
 })
