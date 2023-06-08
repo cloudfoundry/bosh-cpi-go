@@ -31,13 +31,6 @@ var _ = Describe("AgentEnvFactory", func() {
 			agentOptions := AgentOptions{
 				Mbus: "fake-mbus",
 				NTP:  []string{"fake-ntp"},
-
-				Blobstore: BlobstoreOptions{
-					Type: "fake-blobstore-type",
-					Options: map[string]interface{}{
-						"fake-blobstore-key": "fake-blobstore-value",
-					},
-				},
 			}
 
 			agentEnv1 := AgentEnvFactory{}.ForVM(
@@ -58,13 +51,6 @@ var _ = Describe("AgentEnvFactory", func() {
 
         "mbus": "fake-mbus",
         "ntp": ["fake-ntp"],
-
-        "blobstore": {
-          "provider": "fake-blobstore-type",
-          "options": {
-            "fake-blobstore-key": "fake-blobstore-value"
-          }
-        },
 
         "networks": {
           "fake-net-name": {
