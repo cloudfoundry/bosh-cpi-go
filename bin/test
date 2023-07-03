@@ -1,6 +1,12 @@
 #!/bin/bash
-set -e
-go fmt ./...
-ginkgo -r .
-go build -o docs/example docs/example.go
-rm -f docs/example
+set -eu -o pipefail
+
+REPO_DIR="$( cd "$( dirname "${0}" )" && cd .. && pwd )"
+
+(
+  cd "${REPO_DIR}"
+  go fmt ./...
+  go run github.com/onsi/ginkgo/ginkgo@v1 -r .
+  go build -o docs/example docs/example.go
+  rm -f docs/example
+)

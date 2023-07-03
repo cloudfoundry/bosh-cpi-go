@@ -1,0 +1,13 @@
+---
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+    repository: bosh/golang-release
+
+inputs:
+- name: bosh-cpi-go
+
+run:
+  path: bosh-cpi-go/ci/tasks/test-unit.sh
