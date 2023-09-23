@@ -5,7 +5,7 @@ go 1.21
 toolchain go1.21.0
 
 require (
-	github.com/cloudfoundry/bosh-utils v0.0.394
+	github.com/cloudfoundry/bosh-utils v0.0.397
 	github.com/onsi/ginkgo v1.16.5
 	github.com/onsi/gomega v1.27.10
 )
