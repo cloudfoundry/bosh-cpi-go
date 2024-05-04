@@ -1,4 +1,4 @@
-# github.com/cloudfoundry/bosh-utils v0.0.458
+# github.com/cloudfoundry/bosh-utils v0.0.460
 ## explicit; go 1.21.0
 github.com/cloudfoundry/bosh-utils/errors
 github.com/cloudfoundry/bosh-utils/logger
