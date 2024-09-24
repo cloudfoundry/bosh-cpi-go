@@ -10,8 +10,7 @@ CPIs using this library:
 - [Kubernetes CPI](https://github.com/bosh-cpis/bosh-kubernetes-cpi-release)
 
 ## Test
-run ginkgo v1
-`go run github.com/onsi/ginkgo/ginkgo@v1.16.1 -r .`
-## Todos
+`bin/test`
 
+## Todos
 - rename apiv1 to api package

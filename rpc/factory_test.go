@@ -6,7 +6,7 @@ import (
 	"errors"
 
 	boshlog "github.com/cloudfoundry/bosh-utils/logger"
-	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 
 	"github.com/cloudfoundry/bosh-cpi-go/apiv1"
