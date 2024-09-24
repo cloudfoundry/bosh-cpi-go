@@ -236,7 +236,7 @@ var _ = Describe("AgentEnv", func() {
 
 			var serialized1, serialized2 map[string]interface{}
 
-			err = json.Unmarshal([]byte(agentEnv1JSON), &serialized1)
+			err = json.Unmarshal(agentEnv1JSON, &serialized1)
 			Expect(err).ToNot(HaveOccurred())
 
 			err = json.Unmarshal([]byte(agentEnvJSON), &serialized2)
