@@ -9,7 +9,7 @@ import (
 
 var _ = Describe("StemcellAPIVersion", func() {
 	It("retrieves stemcell version", func() {
-		version := NewStemcellAPIVersion(CloudPropsImpl{[]byte(`{"vm":{"stemcell":{"api_version":1}}}`)})
+		version := NewStemcellAPIVersion(CloudPropsImpl{RawMessage: []byte(`{"vm":{"stemcell":{"api_version":1}}}`)})
 
 		val, err := version.Value()
 		Expect(err).ToNot(HaveOccurred())
@@ -17,7 +17,7 @@ var _ = Describe("StemcellAPIVersion", func() {
 	})
 
 	It("defaults to 0", func() {
-		version := NewStemcellAPIVersion(CloudPropsImpl{[]byte(`{}`)})
+		version := NewStemcellAPIVersion(CloudPropsImpl{RawMessage: []byte(`{}`)})
 
 		val, err := version.Value()
 		Expect(err).ToNot(HaveOccurred())
@@ -25,7 +25,7 @@ var _ = Describe("StemcellAPIVersion", func() {
 	})
 
 	It("returns error if cannot parse", func() {
-		version := NewStemcellAPIVersion(CloudPropsImpl{[]byte(`{"vm":{"stemcell":{"api_version":"val"}}}`)})
+		version := NewStemcellAPIVersion(CloudPropsImpl{RawMessage: []byte(`{"vm":{"stemcell":{"api_version":"val"}}}`)})
 
 		val, err := version.Value()
 		Expect(err).To(HaveOccurred())
