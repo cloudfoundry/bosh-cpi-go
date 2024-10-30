@@ -33,6 +33,7 @@ type Network interface {
 	IsDynamic() bool
 	IsDefaultFor(string) bool
 	IPWithSubnetMask() string
+	SubnetCIDR() string
 
 	_final() // interface unimplementable from outside
 }
@@ -198,4 +199,14 @@ func (n NetworkImpl) IPWithSubnetMask() string {
 	}
 	ones, _ := gonet.IPMask(netmaskIP).Size()
 	return fmt.Sprintf("%s/%d", n.IP(), ones)
+}
+
+func (n NetworkImpl) SubnetCIDR() string {
+	netmaskIP := gonet.ParseIP(n.Netmask())
+	if v4 := netmaskIP.To4(); v4 != nil {
+		netmaskIP = v4
+	}
+	ones, _ := gonet.IPMask(netmaskIP).Size()
+	_, cidr, _ := gonet.ParseCIDR(fmt.Sprintf("%s/%d", n.IP(), ones))
+	return cidr.String()
 }
