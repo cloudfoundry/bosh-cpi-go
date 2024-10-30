@@ -197,6 +197,5 @@ func (n NetworkImpl) IPWithSubnetMask() string {
 		netmaskIP = v4
 	}
 	ones, _ := gonet.IPMask(netmaskIP).Size()
-	_, cidr, _ := gonet.ParseCIDR(fmt.Sprintf("%s/%d", n.IP(), ones))
-	return cidr.String()
+	return fmt.Sprintf("%s/%d", n.IP(), ones)
 }
