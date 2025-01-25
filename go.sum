@@ -1,5 +1,5 @@
-github.com/cloudfoundry/bosh-utils v0.0.522 h1:yjGsGagOFFibXV/FXBzrS99hy7k+8cX6nls8SgmYEKE=
-github.com/cloudfoundry/bosh-utils v0.0.522/go.mod h1:czOtSwBiyWGS96zWhl/wtOaZb692nM53JQJW8DDIbR8=
+github.com/cloudfoundry/bosh-utils v0.0.523 h1:S0g07iDnbm4pKAEHet6PXMbRP/AEurUjmrCeesh6+6Q=
+github.com/cloudfoundry/bosh-utils v0.0.523/go.mod h1:k2+9+gD7ATvZa+clC7fRjmQiY0I2QNWyRV2LygsCeZA=
 github.com/creack/pty v1.1.9/go.mod h1:oKZEueFk5CKHvIhNR5MUki03XCEU+Q6VDXinZuGJ33E=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
