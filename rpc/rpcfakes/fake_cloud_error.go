@@ -94,4 +94,4 @@ func (fake *FakeCloudError) recordInvocation(key string, args []interface{}) {
 	fake.invocations[key] = append(fake.invocations[key], args)
 }
 
-var _ rpc.CloudError = new(FakeCloudError)
+var _ rpc.CloudError = new(FakeCloudError) //nolint:errcheck

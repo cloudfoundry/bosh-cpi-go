@@ -94,4 +94,4 @@ func (fake *FakeRetryableError) recordInvocation(key string, args []interface{})
 	fake.invocations[key] = append(fake.invocations[key], args)
 }
 
-var _ rpc.RetryableError = new(FakeRetryableError)
+var _ rpc.RetryableError = new(FakeRetryableError) //nolint:errcheck
