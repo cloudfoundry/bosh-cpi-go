@@ -3,13 +3,13 @@ module github.com/cloudfoundry/bosh-cpi-go
 go 1.23.0
 
 require (
-	github.com/cloudfoundry/bosh-utils v0.0.543
+	github.com/cloudfoundry/bosh-utils v0.0.544
 	github.com/onsi/ginkgo/v2 v2.23.4
 	github.com/onsi/gomega v1.36.3
 )
 
 require (
-	github.com/go-logr/logr v1.4.2 // indirect
+	github.com/go-logr/logr v1.4.3 // indirect
 	github.com/go-task/slim-sprig/v3 v3.0.0 // indirect
 	github.com/google/go-cmp v0.7.0 // indirect
 	github.com/google/pprof v0.0.0-20250501235452-c0086092b71a // indirect
