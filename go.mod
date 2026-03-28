@@ -3,7 +3,7 @@ module github.com/cloudfoundry/bosh-cpi-go
 go 1.25.0
 
 require (
-	github.com/cloudfoundry/bosh-utils v0.0.599
+	github.com/cloudfoundry/bosh-utils v0.0.604
 	github.com/onsi/ginkgo/v2 v2.28.1
 	github.com/onsi/gomega v1.39.0
 )
