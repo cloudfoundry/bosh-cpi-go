@@ -120,6 +120,10 @@ func (c CPI) ResizeDisk(cid apiv1.DiskCID, size int) error {
 	return nil
 }
 
+func (c CPI) UpdateDisk(cid apiv1.DiskCID, size int, props apiv1.DiskCloudProps) (interface{}, error) {
+	return cid.AsString(), nil
+}
+
 func (c CPI) SnapshotDisk(cid apiv1.DiskCID, meta apiv1.DiskMeta) (apiv1.SnapshotCID, error) {
 	return apiv1.NewSnapshotCID("snap-cid"), nil
 }

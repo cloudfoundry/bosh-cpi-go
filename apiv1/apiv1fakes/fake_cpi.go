@@ -163,6 +163,17 @@ type FakeCPI struct {
 	resizeDiskReturns struct {
 		result1 error
 	}
+	UpdateDiskStub        func(apiv1.DiskCID, int, apiv1.DiskCloudProps) (interface{}, error)
+	updateDiskMutex       sync.RWMutex
+	updateDiskArgsForCall []struct {
+		arg1 apiv1.DiskCID
+		arg2 int
+		arg3 apiv1.DiskCloudProps
+	}
+	updateDiskReturns struct {
+		result1 interface{}
+		result2 error
+	}
 	SnapshotDiskStub        func(apiv1.DiskCID, apiv1.DiskMeta) (apiv1.SnapshotCID, error)
 	snapshotDiskMutex       sync.RWMutex
 	snapshotDiskArgsForCall []struct {
@@ -772,6 +783,41 @@ func (fake *FakeCPI) ResizeDiskReturns(result1 error) {
 	}{result1}
 }
 
+func (fake *FakeCPI) UpdateDisk(arg1 apiv1.DiskCID, arg2 int, arg3 apiv1.DiskCloudProps) (interface{}, error) {
+	fake.updateDiskMutex.Lock()
+	fake.updateDiskArgsForCall = append(fake.updateDiskArgsForCall, struct {
+		arg1 apiv1.DiskCID
+		arg2 int
+		arg3 apiv1.DiskCloudProps
+	}{arg1, arg2, arg3})
+	fake.recordInvocation("UpdateDisk", []interface{}{arg1, arg2, arg3})
+	fake.updateDiskMutex.Unlock()
+	if fake.UpdateDiskStub != nil {
+		return fake.UpdateDiskStub(arg1, arg2, arg3)
+	}
+	return fake.updateDiskReturns.result1, fake.updateDiskReturns.result2
+}
+
+func (fake *FakeCPI) UpdateDiskCallCount() int {
+	fake.updateDiskMutex.RLock()
+	defer fake.updateDiskMutex.RUnlock()
+	return len(fake.updateDiskArgsForCall)
+}
+
+func (fake *FakeCPI) UpdateDiskArgsForCall(i int) (apiv1.DiskCID, int, apiv1.DiskCloudProps) {
+	fake.updateDiskMutex.RLock()
+	defer fake.updateDiskMutex.RUnlock()
+	return fake.updateDiskArgsForCall[i].arg1, fake.updateDiskArgsForCall[i].arg2, fake.updateDiskArgsForCall[i].arg3
+}
+
+func (fake *FakeCPI) UpdateDiskReturns(result1 interface{}, result2 error) {
+	fake.UpdateDiskStub = nil
+	fake.updateDiskReturns = struct {
+		result1 interface{}
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeCPI) SnapshotDisk(arg1 apiv1.DiskCID, arg2 apiv1.DiskMeta) (apiv1.SnapshotCID, error) {
 	fake.snapshotDiskMutex.Lock()
 	fake.snapshotDiskArgsForCall = append(fake.snapshotDiskArgsForCall, struct {
@@ -953,6 +999,8 @@ func (fake *FakeCPI) Invocations() map[string][][]interface{} {
 	defer fake.hasDiskMutex.RUnlock()
 	fake.resizeDiskMutex.RLock()
 	defer fake.resizeDiskMutex.RUnlock()
+	fake.updateDiskMutex.RLock()
+	defer fake.updateDiskMutex.RUnlock()
 	fake.snapshotDiskMutex.RLock()
 	defer fake.snapshotDiskMutex.RUnlock()
 	fake.deleteSnapshotMutex.RLock()
