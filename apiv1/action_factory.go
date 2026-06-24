@@ -132,6 +132,9 @@ func (f ActionFactory) Create(method string, apiVersion int, context CallContext
 		}, nil
 
 	case "update_disk":
+		if apiVersion < 2 {
+			return nil, bosherr.Errorf("Method 'update_disk' requires CPI API version 2 or higher")
+		}
 		return func(diskCID DiskCID, size int, props CloudPropsImpl) (interface{}, error) {
 			return cpi.UpdateDisk(diskCID, size, props)
 		}, nil
