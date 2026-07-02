@@ -538,6 +538,38 @@ var _ = Describe("Factory", func() {
 		})
 	})
 
+	Describe("update_disk", func() {
+		It("works when CPI implements DiskUpdater", func() {
+			cpi.UpdateDiskReturns("disk-cid", nil)
+
+			resp, _ := act(`{"method":"update_disk", "arguments":["disk-cid", 1000, {"cp1": "cp1-val"}], "api_version": 2}`)
+			Expect(resp).To(Equal(Response{Result: "disk-cid"}))
+
+			diskCID, size, cloudProps := cpi.UpdateDiskArgsForCall(0)
+			Expect(diskCID).To(Equal(apiv1.NewDiskCID("disk-cid")))
+			Expect(size).To(Equal(1000))
+
+			var cp FakeCPs
+			Expect(cloudProps.As(&cp)).ToNot(HaveOccurred())
+			Expect(cp).To(Equal(FakeCPs{CP: "cp1-val"}))
+		})
+
+		It("errs when CPI's UpdateDisk returns an error", func() {
+			cpi.UpdateDiskReturns(nil, errors.New("err"))
+
+			resp, _ := act(`{"method":"update_disk", "arguments":["disk-cid", 1000, {}], "api_version": 2}`)
+			Expect(resp).To(Equal(Response{Error: &ResponseError{Type: "Bosh::Clouds::CloudError", Message: "err"}}))
+		})
+
+		It("rejects api_version < 2", func() {
+			resp, _ := act(`{"method":"update_disk", "arguments":["disk-cid", 1000, {}]}`)
+			Expect(resp.Error).ToNot(BeNil())
+			Expect(resp.Error.Message).To(ContainSubstring("requires CPI API version 2 or higher"))
+			Expect(cpi.UpdateDiskCallCount()).To(Equal(0))
+		})
+
+	})
+
 	Describe("snapshot_disk", func() {
 		It("works", func() {
 			cpi.SnapshotDiskReturns(apiv1.NewSnapshotCID("snap-cid"), nil)
