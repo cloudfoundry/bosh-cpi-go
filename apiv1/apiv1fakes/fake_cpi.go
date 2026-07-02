@@ -163,7 +163,7 @@ type FakeCPI struct {
 	resizeDiskReturns struct {
 		result1 error
 	}
-	UpdateDiskStub        func(apiv1.DiskCID, int, apiv1.DiskCloudProps) (interface{}, error)
+	UpdateDiskStub        func(apiv1.DiskCID, int, apiv1.DiskCloudProps) (*apiv1.DiskCID, error)
 	updateDiskMutex       sync.RWMutex
 	updateDiskArgsForCall []struct {
 		arg1 apiv1.DiskCID
@@ -171,7 +171,7 @@ type FakeCPI struct {
 		arg3 apiv1.DiskCloudProps
 	}
 	updateDiskReturns struct {
-		result1 interface{}
+		result1 *apiv1.DiskCID
 		result2 error
 	}
 	SnapshotDiskStub        func(apiv1.DiskCID, apiv1.DiskMeta) (apiv1.SnapshotCID, error)
@@ -783,7 +783,7 @@ func (fake *FakeCPI) ResizeDiskReturns(result1 error) {
 	}{result1}
 }
 
-func (fake *FakeCPI) UpdateDisk(arg1 apiv1.DiskCID, arg2 int, arg3 apiv1.DiskCloudProps) (interface{}, error) {
+func (fake *FakeCPI) UpdateDisk(arg1 apiv1.DiskCID, arg2 int, arg3 apiv1.DiskCloudProps) (*apiv1.DiskCID, error) {
 	fake.updateDiskMutex.Lock()
 	fake.updateDiskArgsForCall = append(fake.updateDiskArgsForCall, struct {
 		arg1 apiv1.DiskCID
@@ -810,10 +810,10 @@ func (fake *FakeCPI) UpdateDiskArgsForCall(i int) (apiv1.DiskCID, int, apiv1.Dis
 	return fake.updateDiskArgsForCall[i].arg1, fake.updateDiskArgsForCall[i].arg2, fake.updateDiskArgsForCall[i].arg3
 }
 
-func (fake *FakeCPI) UpdateDiskReturns(result1 interface{}, result2 error) {
+func (fake *FakeCPI) UpdateDiskReturns(result1 *apiv1.DiskCID, result2 error) {
 	fake.UpdateDiskStub = nil
 	fake.updateDiskReturns = struct {
-		result1 interface{}
+		result1 *apiv1.DiskCID
 		result2 error
 	}{result1, result2}
 }

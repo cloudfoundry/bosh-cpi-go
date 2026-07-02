@@ -539,11 +539,11 @@ var _ = Describe("Factory", func() {
 	})
 
 	Describe("update_disk", func() {
-		It("works when CPI implements DiskUpdater", func() {
-			cpi.UpdateDiskReturns("disk-cid", nil)
+		It("works with in-place update (nil new CID)", func() {
+			cpi.UpdateDiskReturns(nil, nil)
 
 			resp, _ := act(`{"method":"update_disk", "arguments":["disk-cid", 1000, {"cp1": "cp1-val"}], "api_version": 2}`)
-			Expect(resp).To(Equal(Response{Result: "disk-cid"}))
+			Expect(resp).To(Equal(Response{Result: nil}))
 
 			diskCID, size, cloudProps := cpi.UpdateDiskArgsForCall(0)
 			Expect(diskCID).To(Equal(apiv1.NewDiskCID("disk-cid")))
@@ -552,6 +552,14 @@ var _ = Describe("Factory", func() {
 			var cp FakeCPs
 			Expect(cloudProps.As(&cp)).ToNot(HaveOccurred())
 			Expect(cp).To(Equal(FakeCPs{CP: "cp1-val"}))
+		})
+
+		It("works with disk replacement (new CID returned)", func() {
+			newCID := apiv1.NewDiskCID("new-disk-cid")
+			cpi.UpdateDiskReturns(&newCID, nil)
+
+			resp, _ := act(`{"method":"update_disk", "arguments":["disk-cid", 1000, {}], "api_version": 2}`)
+			Expect(resp).To(Equal(Response{Result: "new-disk-cid"}))
 		})
 
 		It("errs when CPI's UpdateDisk returns an error", func() {
