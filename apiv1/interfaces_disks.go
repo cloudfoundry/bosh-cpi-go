@@ -14,6 +14,11 @@ type DisksV1 interface {
 
 type DisksV2Additions interface {
 	AttachDiskV2(VMCID, DiskCID) (DiskHint, error)
+}
+
+// DiskUpdater is an opt-in CPI capability corresponding to the BOSH CPI v2
+// `update_disk` method.
+type DiskUpdater interface {
 	UpdateDisk(DiskCID, int, DiskCloudProps) (interface{}, error)
 }
 
