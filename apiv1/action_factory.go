@@ -131,6 +131,18 @@ func (f ActionFactory) Create(method string, apiVersion int, context CallContext
 			return nil, cpi.ResizeDisk(diskCID, size)
 		}, nil
 
+	case "update_disk":
+		if apiVersion < 2 {
+			return nil, bosherr.Errorf("Method 'update_disk' requires CPI API version 2 or higher")
+		}
+		updater, ok := cpi.(DiskUpdater)
+		if !ok {
+			return nil, bosherr.Errorf("Method 'update_disk' is not supported by this CPI")
+		}
+		return func(diskCID DiskCID, size int, props CloudPropsImpl) (*DiskCID, error) {
+			return updater.UpdateDisk(diskCID, size, props)
+		}, nil
+
 	case "set_disk_metadata":
 		return func(diskCID DiskCID, metadata DiskMeta) (interface{}, error) {
 			return nil, cpi.SetDiskMetadata(diskCID, metadata)
