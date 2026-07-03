@@ -539,11 +539,11 @@ var _ = Describe("Factory", func() {
 	})
 
 	Describe("update_disk", func() {
-		It("works with in-place update (nil new CID)", func() {
-			cpi.UpdateDiskReturns(nil, nil)
+		It("works with in-place update (original CID returned)", func() {
+			cpi.UpdateDiskReturns(apiv1.NewDiskCID("disk-cid"), nil)
 
 			resp, _ := act(`{"method":"update_disk", "arguments":["disk-cid", 1000, {"cp1": "cp1-val"}], "api_version": 2}`)
-			Expect(resp).To(Equal(Response{Result: nil}))
+			Expect(resp).To(Equal(Response{Result: "disk-cid"}))
 
 			diskCID, size, cloudProps := cpi.UpdateDiskArgsForCall(0)
 			Expect(diskCID).To(Equal(apiv1.NewDiskCID("disk-cid")))
@@ -555,15 +555,14 @@ var _ = Describe("Factory", func() {
 		})
 
 		It("works with disk replacement (new CID returned)", func() {
-			newCID := apiv1.NewDiskCID("new-disk-cid")
-			cpi.UpdateDiskReturns(&newCID, nil)
+			cpi.UpdateDiskReturns(apiv1.NewDiskCID("new-disk-cid"), nil)
 
 			resp, _ := act(`{"method":"update_disk", "arguments":["disk-cid", 1000, {}], "api_version": 2}`)
 			Expect(resp).To(Equal(Response{Result: "new-disk-cid"}))
 		})
 
 		It("errs when CPI's UpdateDisk returns an error", func() {
-			cpi.UpdateDiskReturns(nil, errors.New("err"))
+			cpi.UpdateDiskReturns(apiv1.DiskCID{}, errors.New("err"))
 
 			resp, _ := act(`{"method":"update_disk", "arguments":["disk-cid", 1000, {}], "api_version": 2}`)
 			Expect(resp).To(Equal(Response{Error: &ResponseError{Type: "Bosh::Clouds::CloudError", Message: "err"}}))
