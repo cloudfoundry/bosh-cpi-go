@@ -3,8 +3,8 @@ module github.com/cloudfoundry/bosh-cpi-go
 go 1.25.0
 
 require (
-	github.com/cloudfoundry/bosh-utils v0.0.623
-	github.com/onsi/ginkgo/v2 v2.31.0
+	github.com/cloudfoundry/bosh-utils v0.0.624
+	github.com/onsi/ginkgo/v2 v2.32.0
 	github.com/onsi/gomega v1.40.0
 )
 
@@ -20,6 +20,6 @@ require (
 	golang.org/x/sync v0.21.0 // indirect
 	golang.org/x/sys v0.46.0 // indirect
 	golang.org/x/text v0.38.0 // indirect
-	golang.org/x/tools v0.46.0 // indirect
+	golang.org/x/tools v0.47.0 // indirect
 	gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c // indirect
 )
