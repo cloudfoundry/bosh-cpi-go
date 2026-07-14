@@ -575,6 +575,14 @@ var _ = Describe("Factory", func() {
 			Expect(cpi.UpdateDiskCallCount()).To(Equal(0))
 		})
 
+		It("returns NotSupported when CPI does not implement DiskUpdater", func() {
+			type noUpdateDiskCPI struct{ apiv1.CPI }
+			cpiFactory.NewStub = func(_ apiv1.CallContext) (apiv1.CPI, error) { return noUpdateDiskCPI{cpi}, nil }
+			resp, _ := act(`{"method":"update_disk", "arguments":["disk-cid", 1000, {}], "api_version": 2}`)
+			Expect(resp).To(Equal(Response{Error: &ResponseError{Type: "Bosh::Clouds::NotSupported", Message: "Method 'update_disk' is not supported by this CPI"}}))
+			Expect(cpi.UpdateDiskCallCount()).To(Equal(0))
+		})
+
 	})
 
 	Describe("snapshot_disk", func() {
