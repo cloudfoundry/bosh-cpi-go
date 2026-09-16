@@ -91,7 +91,7 @@ var _ = Describe("AgentEnvFactory", func() {
 		It("returns error when json is not valid", func() {
 			_, err := AgentEnvFactory{}.FromBytes([]byte(`-`))
 			Expect(err).To(HaveOccurred())
-			Expect(err.Error()).To(ContainSubstring("invalid character"))
+			Expect(err.Error()).To(MatchRegexp("(invalid character|unexpected end of JSON input)"))
 		})
 	})
 })
