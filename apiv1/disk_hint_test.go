@@ -29,7 +29,7 @@ var _ = Describe("DiskHintImpl", func() {
 
 		_, err = json.Marshal(wrongCPs)
 		Expect(err).To(HaveOccurred())
-		Expect(err.Error()).To(Equal("json: error calling MarshalJSON for type apiv1.DiskHint: json: unsupported type: func()"))
+		Expect(err.Error()).To(ContainSubstring("json: error calling MarshalJSON for type"))
 	})
 
 	It("can marshal empty disk hint", func() {

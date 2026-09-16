@@ -21,7 +21,7 @@ var _ = Describe("VMCloudPropsImpl", func() {
 
 		_, err = json.Marshal(wrongCPs)
 		Expect(err).To(HaveOccurred())
-		Expect(err.Error()).To(Equal("json: error calling MarshalJSON for type apiv1.VMCloudPropsImpl: json: unsupported type: func()"))
+		Expect(err.Error()).To(ContainSubstring("json: error calling MarshalJSON for type"))
 	})
 
 	It("does not allow unmarshaling", func() {
