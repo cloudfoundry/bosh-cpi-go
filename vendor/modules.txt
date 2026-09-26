@@ -1,7 +1,7 @@
 # github.com/Masterminds/semver/v3 v3.5.0
 ## explicit; go 1.21
 github.com/Masterminds/semver/v3
-# github.com/cloudfoundry/bosh-utils v0.0.653
+# github.com/cloudfoundry/bosh-utils v0.0.655
 ## explicit; go 1.26.0
 github.com/cloudfoundry/bosh-utils/errors
 github.com/cloudfoundry/bosh-utils/logger
@@ -22,7 +22,7 @@ github.com/google/go-cmp/cmp/internal/value
 # github.com/google/pprof v0.0.0-20260906184651-6331bc6350fe
 ## explicit; go 1.25.0
 github.com/google/pprof/profile
-# github.com/onsi/ginkgo/v2 v2.32.2
+# github.com/onsi/ginkgo/v2 v2.33.0
 ## explicit; go 1.25.0
 github.com/onsi/ginkgo/v2
 github.com/onsi/ginkgo/v2/config
