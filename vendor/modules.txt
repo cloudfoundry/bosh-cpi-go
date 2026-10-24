@@ -1,11 +1,11 @@
 # github.com/Masterminds/semver/v3 v3.5.0
 ## explicit; go 1.21
 github.com/Masterminds/semver/v3
-# github.com/cloudfoundry/bosh-utils v0.0.663
+# github.com/cloudfoundry/bosh-utils v0.0.667
 ## explicit; go 1.26.0
 github.com/cloudfoundry/bosh-utils/errors
 github.com/cloudfoundry/bosh-utils/logger
-# github.com/gkampitakis/go-snaps v0.5.23
+# github.com/gkampitakis/go-snaps v0.5.24
 ## explicit; go 1.23
 # github.com/go-logr/logr v1.4.4
 ## explicit; go 1.18
