@@ -38,7 +38,7 @@ resources:
   type: git
   source:
     uri: git@github.com:cloudfoundry/bosh-cpi-go.git
-    branch: master
+    branch: main
     private_key: ((github_deploy_key_bosh_cpi_go.private_key))
 
 - name: golang-release
